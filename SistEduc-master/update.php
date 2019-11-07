@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
     if(!isset($_SESSION['FUNCIONARIO'])){
         header("Location: login.php");
     }
@@ -25,13 +25,18 @@
     </div>
   <!-- FIM NAV BAR-->
     <?php 
+        
         if(isset($_POST['MAT'])){
             include 'Class/Crud.php';
             include 'Class/Aluno.php';
+            include 'Class/Curso.php';
             $aluno = new Aluno;
+            $curso = new Curso;
             $aluno->setMat($_POST['MAT']);
+            $curso->setID($_POST['ID']);
+            
             $crud = new Crud;
-            $row = $crud->selectUpdate($aluno);
+            $row = $crud->selectUpdate($aluno, $curso);
         if($dados = $row){
         
     ?>

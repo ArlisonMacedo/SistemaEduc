@@ -105,16 +105,17 @@
             }
         }
 
-        public function selectUpdate(Aluno $aluno){
-            $sql = "SELECT * FROM Alunos as Al LEFT JOIN CURSO as C ON Al.MAT = C.Alunos_MAT 
-            WHERE MAT = :MAT";
+        public function selectUpdate(Aluno $aluno,Curso $curso){
+            $sql = "SELECT * FROM Alunos as Al INNER JOIN CURSO as C ON Al.MAT = C.Alunos_MAT 
+            WHERE MAT = :MAT AND C.ID = :ID";
+            $row = array();
             
             try {
                 //code...
                 $stmt = $this->connectionDB()->prepare($sql);
                 $stmt->bindValue(":MAT",$aluno->getMat());
+                $stmt->bindValue(":ID",$curso->getID());
                 $stmt->execute();
-                $row = array();
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 return $row;
             } catch (PDOException $th) {
