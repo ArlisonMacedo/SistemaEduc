@@ -1,3 +1,9 @@
+  <?php 
+  session_start();
+
+
+  
+  ?>
   <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -18,8 +24,14 @@
     <div class="topnav">
       <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>  
       <a href="Sobre.php">Sobre</a>
-      <a href="login.php">Login</a>
-      <a href="areaAluno.php">Area do Aluno</a>
+      
+      <?php if(isset($_SESSION['FUNCIONARIO'])){
+          echo "<a href='dashboard.php'>Dashboard<a>";
+        }else if(isset($_SESSION['ALUNO'])){
+          echo "<a href='areaAluno.php'>". $_SESSION['ALUNO']; "</a>";
+        } else {
+            echo "<a href='login.php'>Acesso ao Sistema</a>";
+        }?>
     </div>
     <!-- FIM NAV BAR-->
 

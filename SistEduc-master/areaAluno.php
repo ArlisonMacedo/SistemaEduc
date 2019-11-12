@@ -57,7 +57,7 @@
             echo "<tr>";
             foreach($values as $key => $dados){
               if($key != "ID" && $key != "Alunos_MAT"){
-                echo "<td>".$dados."</td>";
+                echo "<td><strong>".$dados."</strong></td>";
               }
             }
             echo "</tr>";

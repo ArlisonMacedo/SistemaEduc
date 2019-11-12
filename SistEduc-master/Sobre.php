@@ -18,8 +18,7 @@
 <div class="topnav">
     <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>  
     <a href="Sobre.php">Sobre</a>
-    <a href="login.php">Login</a>
-    <a href="areaAluno.php">Area do Aluno</a>
+    <a href="login.php">Aceso ao Sistema</a>
 </div>
 <!-- FIM NAV BAR-->
 

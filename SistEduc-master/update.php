@@ -3,6 +3,10 @@
     if(!isset($_SESSION['FUNCIONARIO'])){
         header("Location: login.php");
     }
+    if($_POST['ID'] == NULL){
+        $_SESSION['ERRO'] = "Não há Curso para Editar";
+        header("Location: dashboard.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,12 +25,14 @@
   <div class="topnav">
       <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>  
       <a href="Sobre.php">Sobre</a>
-      <a href="login.php">Login</a>
+      <a href="dashboard.php">Dashboard</a>
     </div>
   <!-- FIM NAV BAR-->
     <?php 
+       
         
         if(isset($_POST['MAT'])){
+
             include 'Class/Crud.php';
             include 'Class/Aluno.php';
             include 'Class/Curso.php';
@@ -40,27 +46,37 @@
         if($dados = $row){
         
     ?>
+    <div class="container">
+    <h1>Atualizar Dados</h1>
+        
+    </div>
     
-    <form action="Routes/updateCurso.php" method="post">
-        <div class="form-group">
+    <form action="Routes/updateCurso.php" method="post" class="container form-group border-0">
+        <div class="form-row">
+            <div class="col-sm-6">
             <label for="">Aluno</label>
-            <input type="text" name="nome" value="<?php echo $dados['NOMEALUNO']?>"><br>
-        </div>
-        <div class="form-group">
+            <input type="text" name="nome" class="form-control"readonly value="<?php echo $dados['NOMEALUNO']?>"><br>
+            </div>
+            <div class="col-sm-6">
             <label for="">CPF</label>
-            <input type="text" name="cpf" value="<?php echo $dados['CPF'];?>"><br>
+            <input type="text" name="cpf" class="form-control"readonly value="<?php echo $dados['CPF'];?>"><br>
+            </div>
         </div>
-        <div class="form-group">
+        <div class="form-row">
+            <div class="col-md-6">
             <label for="">Data de Nasc</label>
-            <input type="text" name="data_nasc" value="<?php echo $dados['Data_nasc'];?>"><br>
+            <input type="text" name="data_nasc" class="form-control" readonly value="<?php echo $dados['Data_nasc'];?>"><br>
+            </div>
         </div>
-        <div class="form-group">
+        <div class="form-row">
+            <div class="col-sm-6">
             <label for="">Curso</label>
             <input type="text" name="curso" value="<?php echo $dados['cUrSo'] ;?>"><br>
-        </div>
-        <div class="form-group">
+            </div>
+            <div class="col-sm-6">
             <label for="">Diciplina</label>
             <input type="text" name="diciplina" value="<?php echo $dados['DICIPLINA']; ?>"><br>
+            </div>
         </div>
         <div class="form-row">
             <div class="col-m-2">
@@ -78,6 +94,8 @@
 
     </form>
         <?php }
+        }else{
+        header("Location: dashboard.php");
         }?>
 
 </body>

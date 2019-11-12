@@ -1,6 +1,18 @@
 <?php
+session_start();
+
 
 if(isset($_POST['MAT'])){
+
+    $rgCurso = '/^[A-Za-z\s]{3,}$/';
+    $rgDiciplina = '/^[A-Za-z\s0-9]{3,}$/';
+    $rgNome = '/^[A-ZÀ-Ú]{1}[a-zA-ZÀ-Úà-ú]+[\s]+[A-ZÀ-Ú]{1}[a-zA-ZÀ-Úà-ú]+$/';
+    $rgCpf = '/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/';
+    $rgData_nasc = '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/';
+
+    if( preg_match($rgCurso,$_POST['curso']) && preg_match($rgDiciplina,$_POST['diciplina']) &&
+        preg_match($rgNome,$_POST['nome']) && preg_match($rgCpf,$_POST['cpf']) && 
+        preg_match($rgData_nasc,$_POST['data_nasc']) ){
     include '../Class/Curso.php';
     $curso = new Curso;
     $curso->setNome_curso($_POST['curso']);
@@ -19,4 +31,8 @@ if(isset($_POST['MAT'])){
     include '../Class/Crud.php';
     $crud = new Crud;
     $crud->atualizar($curso,$aluno);
+    }else{
+        $_SESSION['ERRO'] = "Entrada de Dados Invalidos";
+        header("Location: ../dashboard.php");
+    }
 }

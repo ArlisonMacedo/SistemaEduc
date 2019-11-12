@@ -5,7 +5,7 @@
     //include 'Func.php';
     //include 'Aluno.php';
 
-    class Crud extends Conexao {
+    class Crud extends Conexao { 
 
         // metodo de teste 
         public function Teste(){
@@ -64,7 +64,7 @@
         }
 
         public function login(Func $func){ //login Funcionario
-            session_start();
+            //session_start();
             $sql = "SELECT * FROM FUNCIONARIO WHERE NOME = :NOME and CPF = :CPF";
 
             try {
@@ -81,6 +81,9 @@
                     $_SESSION['FUNCIONARIO'] = $func->getNome();
                     header("Location: ../dashboard.php");
                     
+                }else{
+                    $_SESSION['ERROLOGIN'] = "Usuario ou CPF Invalidos";
+                    header("Location: ../login.php");
                 }
 
             } catch (PDOException $th) {
@@ -89,15 +92,21 @@
             }
         }
 
-        /**@Funcções para o Aluno da instituição */
-        public function selectAluno(){
+        /**
+         * 
+         * @Funcções para o Aluno da instituição
+         * 
+         */
+
+        public function selectAluno(){ 
+            // trazer todos os alunos e seus repectivos cursos
             $row = array();
             $sql = "SELECT * FROM Alunos as Al left join CURSO as C on (Al.MAT = C.Alunos_MAT)";
             try {
                 //code...
                 $stmt = $this->connectionDB()->query($sql);
                 $stmt->execute();
-                $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $row = $stmt->fetchAll(PDO::FETCH_ASSOC); //PDO::FECTH_ASSOC trazer os dados sem ser numa base de array
                 return $row;
             } catch (PDOException $th) {
                 //throw $th;
@@ -106,7 +115,11 @@
         }
 
         public function selectUpdate(Aluno $aluno,Curso $curso){
-            $sql = "SELECT * FROM Alunos as Al INNER JOIN CURSO as C ON Al.MAT = C.Alunos_MAT 
+            /**
+             * Função para trazer um registro quando o Aluno estiver relacionado com um Curso
+             * para assim apresentar na tela de Editar dados do Curso
+             */
+            $sql = "SELECT * FROM Alunos as Al LEFT JOIN CURSO as C ON Al.MAT = C.Alunos_MAT 
             WHERE MAT = :MAT AND C.ID = :ID";
             $row = array();
             
@@ -123,8 +136,53 @@
                 echo "Erro ".$th->getMessage();
             }
         }
+        public function selectUpdateAluno(Aluno $aluno){
+            /**
+             * Função para trazer o registro do usuario para Tela de Edição
+             * 
+             */
+            $sql = "SELECT * FROM Alunos WHERE MAT = :MAT ";
+            $row = array();
+            
+            try {
+                //code...
+                $stmt = $this->connectionDB()->prepare($sql);
+                $stmt->bindValue(":MAT",$aluno->getMat());
+                $stmt->execute();
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                return $row;
+            } catch (PDOException $th) {
+                //throw $th;
+                echo "Erro ".$th->getMessage();
+            }
+        }
+
+        public function updateAluno(Aluno $aluno){
+            /**
+             * Função para Atualizar os Dados somente do Aluno
+             */
+            $sql = "UPDATE Alunos SET NOMEALUNO = :nome, CPF = :cpf, Data_nasc = :data_nasc 
+            WHERE MAT = :MAT";
+
+            try {
+                //code...
+                $stmt = $this->connectionDB()->prepare($sql);
+                $stmt->bindValue(":nome",$aluno->getNome());
+                $stmt->bindValue(":cpf",$aluno->getCpf());
+                $stmt->bindValue(":data_nasc",$aluno->getData_nasc());
+                $stmt->bindValue(":MAT",$aluno->getMat());
+                if($stmt->execute()){
+                    header("Location: ../dashboard.php");
+                }
+            } catch (PDOException $th) {
+                //throw $th;
+                echo "Erro ".$th->getMessage();
+            }
+        }
 
         public function deleteAluno(Aluno $aluno,Curso $curso){
+            //* Função para Deletar Aluno e eventualmente o seus curso relacionado
+
             $query = "DELETE FROM CURSO WHERE ID = :ID";
             $sql = "DELETE FROM Alunos WHERE MAT = :MAT";
             $bool = false;
@@ -151,6 +209,8 @@
         }
 
         public function inserirAluno(Aluno $aluno){
+            //* Função para Inserir o Aluno no Sistema
+
             $sql = "INSERT INTO Alunos VALUES (null,:nome,:cpf,:data_nasc)";
             try {
                 //code...
@@ -168,6 +228,9 @@
         }
 
         public function inserirCurso(Curso $curso){
+            // função para inserir curso no sistema e inserindo a chave estrangeira
+            // do Aluno para o relacionamento
+
             $sql = "INSERT INTO CURSO VALUES (null,:curso,:diciplina,:nota1,:nota2,:media,:Alunos_MAT)";
             try {
                 //code...
@@ -188,6 +251,10 @@
         }
 
         public function atualizar(Curso $curso, Aluno $aluno){
+            // função para fazer o update tanto do curso e tbm do aluno passando os dois 
+            // objetos Aluno e Curso como parametro acessando os metodos Setters e Getters
+            // trabalho com a chave primaria de ambas as tabelas
+
             $upAluno = "UPDATE Alunos set NOMEALUNO = :nome, CPF = :cpf, Data_nasc = :data_nasc 
             WHERE MAT = :MAT";
             
@@ -217,6 +284,10 @@
                     $boolA = true;
                 }
                 if($boolC && $boolA){
+                /** Sempre irar dar Verdadeiro (True) pois o usuario não irar manuserrar as chaves
+                 * primarias de ambas as tabelas, pois isso ficara a cargo do sistema em suas
+                 * tratativas 
+                 */
                     header("Location: ../dashboard.php");
                 }
             } catch (PDOException $th) {
@@ -226,7 +297,10 @@
         }
 
         public function loginAluno(Aluno $aluno){
-            session_start();
+           // session_start();
+           /**
+            * Função para Login Do Aluno
+            */
             $sql = "SELECT * FROM Alunos WHERE NOMEALUNO = :nome and CPF = :cpf ";
 
             try {
@@ -242,6 +316,9 @@
                     $_SESSION['CPF'] = $aluno->getCpf();
                     header("Location: ../areaAluno.php");
                     
+                }else{
+                    $_SESSION['ERROLOGIN'] = "Usuario ou CPF Invalidos";
+                    header("Location: ../login.php");
                 }
                 
             } catch (PDOException $th) {
@@ -252,6 +329,10 @@
         }
 
         public function selectDataAluno(Aluno $aluno){
+            /**
+             * Função para Trazer os dados do Aluno Assim que estiver logado sera exibido
+             * na Area do Aluno
+             */
             $sql = "SELECT * FROM Alunos as Al LEFT JOIN CURSO AS C ON Al.MAT =  C.Alunos_MAT 
             WHERE CPF = :cpf";
             $row = array();
