@@ -16,9 +16,9 @@
 <body>
 <!--NAV BAR-->
 <div class="topnav">
-    <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>  
+    <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>
     <a href="Sobre.php">Sobre</a>
-    <a href="login.php">Aceso ao Sistema</a>
+    <a href="login.php">Acesso ao Sistema</a>
 </div>
 <!-- FIM NAV BAR-->
 
@@ -32,7 +32,7 @@
       <li data-target="#demo" data-slide-to="1"></li>
       <li data-target="#demo" data-slide-to="2"></li>
     </ul>
-    
+
     <!-- The slideshow -->
     <div class="carousel-inner">
       <div class="carousel-item active">
@@ -45,7 +45,7 @@
         <img src="./img/slide3.jpg" alt="slide3" width="1100" height="500" >
       </div>
     </div>
-    
+
     <!-- Left and right controls -->
     <a class="carousel-control-prev" href="#demo" data-slide="prev">
       <span class="carousel-control-prev-icon"></span>
@@ -59,15 +59,15 @@
 <section>
   <div class="content">
     <h2>SisteEduc</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere risus ex, quis pharetra ex vehicula quis. Proin pulvinar augue eu elementum varius. 
-      Duis auctor, augue quis scelerisque porttitor, neque elit condimentum arcu, a pretium odio enim sit amet justo. 
-      Vivamus ac laoreet justo. Aenean convallis ligula lorem, nec fermentum nibh vehicula vel. Integer facilisis mauris quis cursus ullamcorper. 
-      Etiam eros dolor, lacinia vitae eleifend quis, accumsan eu nisl. Ut placerat, purus ac vestibulum maximus, est felis congue nisi, non aliquet ligula massa non ante. 
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere risus ex, quis pharetra ex vehicula quis. Proin pulvinar augue eu elementum varius.
+      Duis auctor, augue quis scelerisque porttitor, neque elit condimentum arcu, a pretium odio enim sit amet justo.
+      Vivamus ac laoreet justo. Aenean convallis ligula lorem, nec fermentum nibh vehicula vel. Integer facilisis mauris quis cursus ullamcorper.
+      Etiam eros dolor, lacinia vitae eleifend quis, accumsan eu nisl. Ut placerat, purus ac vestibulum maximus, est felis congue nisi, non aliquet ligula massa non ante.
       Donec efficitur lacinia sapien, et faucibus neque vehicula et.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere risus ex, quis pharetra ex vehicula quis. Proin pulvinar augue eu elementum varius. 
-          Duis auctor, augue quis scelerisque porttitor, neque elit condimentum arcu, a pretium odio enim sit amet justo. 
-          Vivamus ac laoreet justo. Aenean convallis ligula lorem, nec fermentum nibh vehicula vel. Integer facilisis mauris quis cursus ullamcorper. 
-          Etiam eros dolor, lacinia vitae eleifend quis, accumsan eu nisl. Ut placerat, purus ac vestibulum maximus, est felis congue nisi, non aliquet ligula massa non ante. 
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere risus ex, quis pharetra ex vehicula quis. Proin pulvinar augue eu elementum varius.
+          Duis auctor, augue quis scelerisque porttitor, neque elit condimentum arcu, a pretium odio enim sit amet justo.
+          Vivamus ac laoreet justo. Aenean convallis ligula lorem, nec fermentum nibh vehicula vel. Integer facilisis mauris quis cursus ullamcorper.
+          Etiam eros dolor, lacinia vitae eleifend quis, accumsan eu nisl. Ut placerat, purus ac vestibulum maximus, est felis congue nisi, non aliquet ligula massa non ante.
           Donec efficitur lacinia sapien, et faucibus neque vehicula et.</p>
   </div>
 </section>
@@ -100,7 +100,7 @@
 
 <footer class="footer" id="footer2">
     <div style="margin-top: 40px;">
-        <i class="fa fa-phone-square" aria-hidden="true"></i> 
+        <i class="fa fa-phone-square" aria-hidden="true"></i>
         <a style="color:black !important;">Fone: (98)9-4002-8922 - <i class="fa fa-whatsapp" aria-hidden="true"></i> (98)98725-6598</a><br>
         <i class="fa fa-instagram " aria-hidden="true"> @SistEduc</i><br>
         <i class="fa fa-envelope" aria-hidden="true"> sisteduc@gmail.com</i>

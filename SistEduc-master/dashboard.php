@@ -1,4 +1,4 @@
-<?php 
+<?php
   session_start();
   if(!isset($_SESSION['FUNCIONARIO'])){
     header("Location: login.php");
@@ -20,14 +20,14 @@
 <body>
   <!--NAV BAR-->
   <div class="topnav">
-      <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>  
+      <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>
       <a href="Sobre.php">Sobre</a>
       <a href="Includes/Destroy.php">Sair</a>
     </div>
   <!-- FIM NAV BAR-->
   <section>
     <div class="container">
-      <h2>Ola <?= $_SESSION['FUNCIONARIO'];?> Bem Vindo</h2>  
+      <h2>Ola <?= $_SESSION['FUNCIONARIO'];?> Bem Vindo</h2>
       <br>
       <div class="row">
         <div class="col-md-2">
@@ -40,39 +40,39 @@
       </div>
       <div class="row">
         <div class="col-sm-12">
-          <?php 
+          <?php
             if(isset($_SESSION['ERRO'])){ ?>
               <div class="alert alert-warning" role="alert">
-                <?= $_SESSION['ERRO']; 
+                <?= $_SESSION['ERRO'];
                   unset($_SESSION['ERRO']);
                 ?>
               </div>
-            <?php } 
+            <?php }
           ?>
         </div>
       </div>
     </div>
-    
-      
-    
+
+
+
     <br>
       <table class="table table-striped">
         <thead class="thead-dark">
-        
+
         <tr>
-          <th>Matricula</th>
-          <th>Aluno</th>   
-          <th>Cpf</th>
+          <th>Matrícula</th>
+          <th>Aluno</th>
+          <th>CPF</th>
           <th>Data Nasc</th>
           <th>Curso</th>
-          <th>Diciplina</th>
+          <th>Disciplina</th>
           <th>Nota1</th>
           <th>Nota2</th>
-          <th>Media</th>
+          <th>Média</th>
           <th colspan="3">Ação</th>
         </tr>
         </thead>
-        <?php 
+        <?php
             include 'Class/Crud.php';
             $crud = new Crud;
             $row = $crud->selectAluno();
@@ -81,9 +81,9 @@
               foreach($values as $key => $dados){
                 if($key != "ID" && $key != "Alunos_MAT"){
                   echo "<td><strong>".$dados."</strong></td>";
-                  
+
                 }
-                
+
               }?>
               <td>
                 <form action="editUser.php" method="post" class="border-0">
@@ -99,7 +99,10 @@
                   <form action="update.php" method="post" class="border-0">
                     <input type="hidden" name="ID" value="<?php echo $values['ID'];?>">
                     <input type="hidden" name="MAT" value="<?php echo $values['MAT'];?>">
-                    <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></button>
+                    <button type="submit" class="btn btn-success btn-sm">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-address-book"></i>
+                    </button>
                   </form>
                 </td>
                 <td>
@@ -111,16 +114,16 @@
                       </button>
                   </form>
                 </td>
-                
+
               <?php
               echo"</tr>";
             }
-        
+
         ?>
       </table>
       <br><br><br>
   </section>
-  
+
 
 </body>
 </html>

@@ -1,8 +1,8 @@
-  <?php 
+  <?php
   session_start();
 
 
-  
+
   ?>
   <!DOCTYPE html>
   <html lang="en">
@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
-  
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -22,9 +22,9 @@
   <body>
     <!--NAV BAR-->
     <div class="topnav">
-      <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>  
+      <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>
       <a href="Sobre.php">Sobre</a>
-      
+
       <?php if(isset($_SESSION['FUNCIONARIO'])){
           echo "<a href='dashboard.php'>Dashboard<a>";
         }else if(isset($_SESSION['ALUNO'])){
@@ -44,7 +44,7 @@
         <li data-target="#demo" data-slide-to="1"></li>
         <li data-target="#demo" data-slide-to="2"></li>
       </ul>
-      
+
       <!-- The slideshow -->
       <div class="carousel-inner">
         <div class="carousel-item active">
@@ -57,7 +57,7 @@
           <img src="./img/slide3.jpg" alt="slide3" width="1100" height="500" >
         </div>
       </div>
-      
+
       <!-- Left and right controls -->
       <a class="carousel-control-prev" href="#demo" data-slide="prev">
         <span class="carousel-control-prev-icon"></span>
@@ -96,8 +96,8 @@
 
 <footer class="footer" id="footer2">
     <div style="margin-top: 40px;">
-        <i class="fa fa-phone-square" aria-hidden="true"></i> 
-        <a style="color:black !important;">Fone: (98)9-4002-8922 - <i class="fa fa-whatsapp" aria-hidden="true"></i> (98)98725-6598</a><br>
+        <i class="fa fa-phone-square" aria-hidden="true"></i>
+        <a style="color:black !important;">Fone: (98) 4002-8922 - <i class="fa fa-whatsapp" aria-hidden="true"></i> (98) 98725-6598</a><br>
         <i class="fa fa-instagram " aria-hidden="true"> @SistEduc</i><br>
         <i class="fa fa-envelope" aria-hidden="true"> sisteduc@gmail.com</i>
     </div>
