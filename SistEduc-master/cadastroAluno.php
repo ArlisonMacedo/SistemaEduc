@@ -1,4 +1,4 @@
-<?php 
+<?php
   session_start();
   if(!isset($_SESSION["FUNCIONARIO"])){
     header("Location: login.php");
@@ -6,20 +6,20 @@
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"> 
-  <title>SistEduc</title> 
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <title>SistEduc</title>
 </head>
 <link rel="sortcut icon" href="./img/logo1.png" type="image/x-icon" />
 <body>
 <!--NAV BAR-->
   <div class="topnav">
-    <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>  
+    <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>
     <a href="Sobre.php">Sobre</a>
     <a href="dashboard.php">Dashboard</a>
   </div>
@@ -27,7 +27,9 @@
 <div class="container">
   <h2>Adicionar Novo Aluno</h2>
   <?php if(isset($_SESSION['ERRO'])){
-      echo "<h4>".$_SESSION['ERRO']."</h4>";
+      echo "<div class='alert alert-warning' role='alert'>
+                <h4>".$_SESSION['ERRO']."</h4>
+            </div>";
       unset($_SESSION['ERRO']);
     }?>
 <form action="Routes/insertAluno.php" method="POST" class="border-0">
@@ -45,11 +47,11 @@
     <label>Data De Nascimento</label>
     <input type="date" class="form-control col-sm-2"name="data_nasc" required>
   </div>
-  
+
   <button type="submit" class="btn btn-primary">Enviar</button>
 </form>
 </div>
 
-  
+
 </body>
 </html>

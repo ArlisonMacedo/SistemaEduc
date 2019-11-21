@@ -72,7 +72,8 @@
 
             <?php
                 }else{
-                    unset($AlunosMAT);
+                    unset($AlunosMAT); //A variavel AlunosMAT é Destruida para que o usuario não
+                                       // insira uma matricula invalida no banco de dados
                     ?>
 
                     <div class="form-row">

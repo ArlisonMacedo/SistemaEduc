@@ -2,6 +2,8 @@
 session_start();
 
 
+
+
 if(isset($_POST['MAT'])){
 
     $rgCurso = '/^[A-Za-z\s]{3,}$/';
@@ -11,8 +13,10 @@ if(isset($_POST['MAT'])){
     $rgData_nasc = '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/';
 
     if( preg_match($rgCurso,$_POST['curso']) && preg_match($rgDiciplina,$_POST['diciplina']) &&
-        preg_match($rgNome,$_POST['nome']) && preg_match($rgCpf,$_POST['cpf']) && 
-        preg_match($rgData_nasc,$_POST['data_nasc']) ){
+        preg_match($rgNome,$_POST['nome']) && preg_match($rgCpf,$_POST['cpf']) &&
+        preg_match($rgData_nasc,$_POST['data_nasc']) && preg_match('/^[\d]?\.?[0-9]?[0]?$/',$_POST['nota1']) &&
+        preg_match('/^[\d]?\.?[0-9]?[0]?$/',$_POST['nota2'])){
+
     include '../Class/Curso.php';
     $curso = new Curso;
     $curso->setNome_curso($_POST['curso']);

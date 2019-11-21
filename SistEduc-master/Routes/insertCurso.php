@@ -4,9 +4,11 @@ if(isset($_POST['curso'])){
     //$nome_curso = $_POST['curso'];
 
     include '../Class/Curso.php';
-    if(preg_match('/^[A-Za-z\sÀ-Úà-ú]{3,}$/',$_POST['curso']) && 
-        preg_match('/^[A-Za-z\s0-9À-Úà-ú]{3,}$/',$_POST['diciplina']) && 
-        preg_match('/^[\d]{4,}$/',$_POST['Alunos_MAT'])
+    if( preg_match('/^[A-Za-z\sÀ-Úà-ú]{3,}$/',$_POST['curso']) &&
+        preg_match('/^[A-Za-z\s0-9À-Úà-ú]{3,}$/',$_POST['diciplina']) &&
+        preg_match('/^[\d]{4,}$/',$_POST['Alunos_MAT']) &&
+        preg_match('/^[\d]?\.?[0-9]?[0]?$/',$_POST['nota1']) &&
+        preg_match('/^[\d]?\.?[0-9]?[0]?$/',$_POST['nota2'])
         ){
             $curso = new Curso;
             $curso->setNome_curso($_POST['curso']);

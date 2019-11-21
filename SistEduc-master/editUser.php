@@ -19,12 +19,12 @@
     <body>
   <!--NAV BAR-->
   <div class="topnav">
-      <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>  
+      <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>
       <a href="Sobre.php">Sobre</a>
       <a href="dashboard.php">Dashboard</a>
     </div>
-    <?php 
-    
+    <?php
+
         if(isset($_POST['MAT'])){
             include 'Class/Aluno.php';
             include 'Class/Crud.php';
@@ -32,7 +32,12 @@
             $aluno->setMat($_POST['MAT']);
             $crud = new Crud;
 
-            $row = $crud->selectUpdateAluno($aluno);
+            $row = $crud->selectUpdateAluno($aluno);// esse script esta localizado em Crud.php
+                                                    // onde so traz um unico registro de acordo com o POST de [MAT]
+                                                    // o dado [MAT] vem do dashboard no mini-form do botão para edição do usuario ja vem incluido
+                                                    // no POST a variavel MAT onde esta trazendo a chave primaria da tabela Alunos de acordo que clicado
+                                                    // no usuario em dashboard
+                                                    // e o administrador poderar editar de acordo com as regex.
 
             if($row){ ?>
                 <div class="container">
@@ -61,6 +66,6 @@
            <?php }
 
         }
-    
-    
+
+
     ?>

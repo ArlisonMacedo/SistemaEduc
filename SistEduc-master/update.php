@@ -23,14 +23,14 @@
     <body>
   <!--NAV BAR-->
   <div class="topnav">
-      <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>  
+      <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>
       <a href="Sobre.php">Sobre</a>
       <a href="dashboard.php">Dashboard</a>
     </div>
   <!-- FIM NAV BAR-->
-    <?php 
-       
-        
+    <?php
+
+
         if(isset($_POST['MAT'])){
 
             include 'Class/Crud.php';
@@ -40,56 +40,56 @@
             $curso = new Curso;
             $aluno->setMat($_POST['MAT']);
             $curso->setID($_POST['ID']);
-            
+
             $crud = new Crud;
-            $row = $crud->selectUpdate($aluno, $curso);
+            $row = $crud->selectUpdateCurso($aluno, $curso);
         if($dados = $row){
-        
+
     ?>
     <div class="container">
     <h1>Atualizar Dados</h1>
-        
+
     </div>
-    
+
     <form action="Routes/updateCurso.php" method="post" class="container form-group border-0">
         <div class="form-row">
             <div class="col-sm-6">
             <label for="">Aluno</label>
-            <input type="text" name="nome" class="form-control"readonly value="<?php echo $dados['NOMEALUNO']?>"><br>
+            <input type="text" name="nome" class="form-control"readonly value="<?= $dados['NOMEALUNO']?>"><br>
             </div>
             <div class="col-sm-6">
             <label for="">CPF</label>
-            <input type="text" name="cpf" class="form-control"readonly value="<?php echo $dados['CPF'];?>"><br>
+            <input type="text" name="cpf" class="form-control"readonly value="<?= $dados['CPF'];?>"><br>
             </div>
         </div>
         <div class="form-row">
             <div class="col-md-6">
             <label for="">Data de Nasc</label>
-            <input type="text" name="data_nasc" class="form-control" readonly value="<?php echo $dados['Data_nasc'];?>"><br>
+            <input type="text" name="data_nasc" class="form-control" readonly value="<?= $dados['Data_nasc'];?>"><br>
             </div>
         </div>
         <div class="form-row">
             <div class="col-sm-6">
             <label for="">Curso</label>
-            <input type="text" name="curso" value="<?php echo $dados['cUrSo'] ;?>"><br>
+            <input type="text" name="curso" value="<?= $dados['cUrSo'] ;?>"><br>
             </div>
             <div class="col-sm-6">
             <label for="">Diciplina</label>
-            <input type="text" name="diciplina" value="<?php echo $dados['DICIPLINA']; ?>"><br>
+            <input type="text" name="diciplina" value="<?= $dados['DICIPLINA']; ?>"><br>
             </div>
         </div>
         <div class="form-row">
             <div class="col-m-2">
                 <label for="">Nota 1</label>
-                <input type="text" name="nota1" value="<?php echo $dados['NOTA1'];?>"><br>
+                <input type="text" name="nota1" value="<?= $dados['NOTA1'];?>"><br>
             </div>
             <div class="col-m-2">
                 <label for="">Nota 2</label>
-                <input type="text" name="nota2" value="<?php echo $dados['NOTA2'];?>"> <br>
+                <input type="text" name="nota2" value="<?= $dados['NOTA2'];?>"> <br>
             </div>
         </div>
-            <input type="hidden" name="MAT" value="<?php echo $dados['MAT'];?>">
-            <input type="hidden" name="ID" value="<?php echo $dados['ID'] ;?>">
+            <input type="hidden" name="MAT" value="<?= $dados['MAT'];?>">
+            <input type="hidden" name="ID" value="<?= $dados['ID'] ;?>">
             <button type="submit" class="btn btn-primary">Atualizar</button>
 
     </form>

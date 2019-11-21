@@ -5,13 +5,12 @@
     }else{
         include '../Class/Aluno.php';
         $aluno = new Aluno;
-        $aluno->setMat($_POST['MAT']);
+        $aluno->setMat($_POST['MAT']); 
         include '../Class/Curso.php';
         $curso = new Curso;
         $curso->setID($_POST['ID']);
         include '../Class/Crud.php';
         $crud = new Crud;
-        $crud->deleteAluno($aluno,$curso);
+        $crud->deleteAluno($aluno,$curso); // chamar metodo de delete no Crud
 
     }
-

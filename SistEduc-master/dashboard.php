@@ -27,7 +27,7 @@
   <!-- FIM NAV BAR-->
   <section>
     <div class="container">
-      <h2>Ola <?= $_SESSION['FUNCIONARIO'];?> Bem Vindo</h2>
+      <center><h2>Ola <?= $_SESSION['FUNCIONARIO'];?> Bem Vindo</h2></center>
       <br>
       <div class="row">
         <div class="col-md-2">
@@ -35,7 +35,7 @@
 
         </div>
         <div class="col-md-2">
-          <a href="cadastroCurso.php"><button class="btn btn-primary">Cadastrar Curso</button></a>
+          <a href="cadastroCurso.php"><button class="btn btn-primary">Adicionar Curso</button></a>
         </div>
       </div>
       <div class="row">
@@ -66,8 +66,8 @@
           <th>Data Nasc</th>
           <th>Curso</th>
           <th>Disciplina</th>
-          <th>Nota1</th>
-          <th>Nota2</th>
+          <th>Nota 1</th>
+          <th>Nota 2</th>
           <th>Média</th>
           <th colspan="3">Ação</th>
         </tr>
@@ -75,8 +75,11 @@
         <?php
             include 'Class/Crud.php';
             $crud = new Crud;
-            $row = $crud->selectAluno();
+            $row = $crud->selectAluno(); // função esta localizada em Crud.php para exibir os todos alunos e cursos
+                                         // irar exibir alunos mesmo que esteja sem curso
             foreach($row as $key => $values){
+                // $values['ID'];
+                // $values['NOMEALUNO']
               echo"<tr>";
               foreach($values as $key => $dados){
                 if($key != "ID" && $key != "Alunos_MAT"){
@@ -97,8 +100,8 @@
 
                 <td>
                   <form action="update.php" method="post" class="border-0">
-                    <input type="hidden" name="ID" value="<?php echo $values['ID'];?>">
-                    <input type="hidden" name="MAT" value="<?php echo $values['MAT'];?>">
+                    <input type="hidden" name="ID" value="<?= $values['ID'];?>">
+                    <input type="hidden" name="MAT" value="<?= $values['MAT'];?>">
                     <button type="submit" class="btn btn-success btn-sm">
                         <i class="fa fa-edit"></i>
                         <i class="fa fa-address-book"></i>
@@ -107,8 +110,8 @@
                 </td>
                 <td>
                   <form action="Routes/deleteAlun.php" method="post" class="border-0">
-                    <input type="hidden" name="ID" value="<?php echo $values['ID'];?>">
-                    <input type="hidden" name="MAT" value="<?php echo $values['MAT'];?>">
+                    <input type="hidden" name="ID" value="<?= $values['ID'];?>">
+                    <input type="hidden" name="MAT" value="<?= $values['MAT'];?>">
                     <button type="submit" class="btn btn-danger btn-sm" >
                       <i class="fa fa-trash" aria-hidden="true"></i>
                       </button>
