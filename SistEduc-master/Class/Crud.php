@@ -279,6 +279,7 @@
              * Função para Trazer os dados do Aluno Assim que estiver logado sera exibido
              * na Area do Aluno
              */
+
             $sql = "SELECT * FROM Alunos as Al LEFT JOIN CURSO AS C ON Al.MAT =  C.Alunos_MAT
             WHERE CPF = :cpf";
             $row = array();
@@ -304,6 +305,17 @@
             // do Aluno para o relacionamento
             // o curso somente irar ser cadastro se exitir um Aluno para relacionar a ele(Curso)
 
+            $exist = "SELECT * FROM CURSO WHERE cUrSo = :curso and DICIPLINA = :disciplina";
+            $try = $this->connectionDB()->prepare($exist);
+            $try->bindValue(":curso",$curso->getNome_curso());
+            $try->bindValue(":disciplina",$curso->getDiciplina());
+            $try->execute();
+            $row = $try->fetchAll(PDO::FETCH_ASSOC);
+            if(count($row) > 0){
+                $_SESSION['ERRO'] = "ERRO! Curso e Disciplina Já Cadastrado a esse Usuário";
+                header("Location: ../dashboard.php");
+            }else{
+
             $sql = "INSERT INTO CURSO VALUES (null,:curso,:diciplina,:nota1,:nota2,:media,:Alunos_MAT)";
                 try {
                     //code...
@@ -321,13 +333,14 @@
                     //throw $th;
                     echo "Erro ".$th->getMessage();
                 }
-
+            }
         }
         public function selectUpdateCurso(Aluno $aluno,Curso $curso){
             /**
              * Função para trazer um unico registro quando o Aluno estiver relacionado com um Curso
              * para assim apresentar na tela de Editar dados do Curso
              */
+
             $sql = "SELECT * FROM Alunos as Al INNER JOIN CURSO as C ON Al.MAT = C.Alunos_MAT
             WHERE MAT = :MAT AND C.ID = :ID";
             $row = array();
@@ -339,6 +352,14 @@
                 $stmt->bindValue(":ID",$curso->getID());
                 $stmt->execute();
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($row) {
+                    // code...
+                    $_SESSION['curso'] = $row['cUrSo'];
+                    $_SESSION['disciplina'] = $row['DICIPLINA'];
+                    $_SESSION['nota1'] = $row['NOTA1'];
+                    $_SESSION['nota2'] = $row['NOTA2'];
+                    $_SESSION['ID_CURSO'] = $row['ID'];
+                }
                 return $row;
             } catch (PDOException $th) {
                 //throw $th;
@@ -350,6 +371,8 @@
             // função para fazer o update tanto do curso e tbm do aluno passando os dois
             // objetos Aluno e Curso como parametro acessando os metodos Setters e Getters
             // trabalho com a chave primaria de ambas as tabelas
+
+
 
             $upAluno = "UPDATE Alunos set NOMEALUNO = :nome, CPF = :cpf, Data_nasc = :data_nasc
             WHERE MAT = :MAT";
@@ -370,7 +393,10 @@
                 $stmt->bindValue(":ID",$curso->getID());
                 if($stmt->execute()){
                    $boolC = true;
+                   $_SESSION['NewCurso'] = $curso->getNome_curso();
+                   $_SESSION['NewDisciplina'] = $curso->getDiciplina();
                 }
+
                 $stud = $this->connectionDB()->prepare($upAluno);
                 $stud->bindValue(":nome",$aluno->getNome());
                 $stud->bindValue(":cpf",$aluno->getCpf());
@@ -384,7 +410,7 @@
                  * primarias de ambas as tabelas, pois isso ficara a cargo do sistema em suas
                  * tratativas
                  */
-                    header("Location: ../dashboard.php");
+                 $this->Rollback($_SESSION['NewCurso'], $_SESSION['NewDisciplina']);
                 }
             } catch (PDOException $th) {
                 //throw $th;
@@ -392,7 +418,41 @@
             }
         }
 
+        public function Rollback($curso, $disciplina){
+            $exist = "SELECT * FROM Alunos as Al inner join CURSO as CS on Al.MAT = CS.Alunos_MAT
+            WHERE CS.cUrSo = :curso and CS.DICIPLINA = :disciplina";
+
+            $try = $this->connectionDB()->prepare($exist);
+            $try->bindValue(":curso",$curso);
+            $try->bindValue(":disciplina",$disciplina);
+            $try->execute();
+            $row = $try->fetchAll(PDO::FETCH_ASSOC);
+            if(count($row) <= 1){
+
+                //include '../verificaDuplication.php';
+                $_SESSION['SUCESSO'] = "Atualizado com Sucesso";
+
+                header("Location: ../dashboard.php");
 
 
+               }else{
+                   $upCurso = "UPDATE CURSO SET cUrSo = :curso, DICIPLINA = :diciplina, nota1 = :nota1,
+                   nota2 = :nota2, MEDIA = (:nota1+:nota2) / 2 WHERE ID = :ID";
+
+
+                   $reload = $this->connectionDB()->prepare($upCurso);
+                   $reload->bindValue(":curso",$_SESSION['curso']);
+                   $reload->bindValue(":diciplina",$_SESSION['disciplina']);
+                   $reload->bindValue(":nota1",$_SESSION['nota1']);
+                   $reload->bindValue(":nota2",$_SESSION['nota2']);
+                   $reload->bindValue(":ID",$_SESSION['ID_CURSO']);
+                   $reload->execute();
+                   
+                    $_SESSION['ERRO'] = "ERRO! Curso e Disciplina Já Cadastrado a esse Usuário";
+                    header("Location: ../dashboard.php");
+
+               }
+           }
     }
+
 ?>

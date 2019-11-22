@@ -18,9 +18,18 @@
 <body>
   <!--NAV BAR-->
   <div class="topnav">
-      <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>  
-      <a href="Sobre.php">Sobre</a>
-      <?php if($_SESSION['ALUNO']){echo "";} ?>
+      <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>
+      <a href="Sobre.php"><button class="btn btn-tranparent text-light"><strong>Sobre</strong></button></a>
+      <?php if($_SESSION['ALUNO']){
+          echo "<a style='position: absolute; left:70%;'>
+                <button class='btn text-light'><strong> Olá, ".$_SESSION['ALUNO']."</strong></button>
+            </a>";
+      } ?>
+      <a href="Includes/Destroy.php" style="position:relative; margin-left: 73%;">
+          <button type="submit" class="btn btn-dark">Sair</button>
+      </a>
+
+
     </div>
   <!-- FIM NAV BAR-->
   <?php
@@ -36,43 +45,50 @@
 
   ?>
   <section>
-    <h2>Dados do Aluno</h2>
-    <h3>Ola seja bem Vindo(a) <?= $_SESSION['ALUNO'];?></h3> 
+      <div class="container mt-5">
+
+          <h2>Dados do Aluno</h2>
+
+      </div>
       <table class="table">
         <tr class="thead-dark">
           <th>Matricula</th>
-          <th>Nome</th>   
-          <th>Cpf</th>
+          <th>Nome</th>
+          <th>CPF</th>
           <th>Data Nasc</th>
           <th>Curso</th>
-          <th>Diciplina</th>
+          <th>Disciplina</th>
           <th>Nota1</th>
           <th>Nota2</th>
           <th>Média</th>
         </tr>
-        <?php 
-        
-          
+        <?php
+
+
           foreach($row as $key => $values){
             echo "<tr>";
-            foreach($values as $key => $dados){
-              if($key != "ID" && $key != "Alunos_MAT"){
-                echo "<td><strong>".$dados."</strong></td>";
-              }
-            }
+            ?>
+            <td><?= $values['MAT'];?></td>
+            <td><?= $values['NOMEALUNO'];?></td>
+            <td><?= $values['CPF'];?></td>
+            <td><?= date('d/m/Y',strtotime($values['Data_nasc']));?></td>
+            <td><?= $values['cUrSo'];?></td>
+            <td><?= $values['DICIPLINA'];?></td>
+            <td><?= $values['NOTA1'];?></td>
+            <td><?= $values['NOTA2'];?></td>
+            <td><?= $values['MEDIA'];?></td>
+            <?php
             echo "</tr>";
           }
-        
+
         ?>
-        
+
       </table>
   </section>
 
 
-  
-<div class="sair">
-    <a href="Includes/Destroy.php"><button type="submit" class="btn btn-primary">Sair</button></a>
-</div>
+
+
 
 
 </body>

@@ -23,14 +23,17 @@
     <!--NAV BAR-->
     <div class="topnav">
       <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>
-      <a href="Sobre.php">Sobre</a>
+      <a href="Sobre.php"><button class="btn btn-transparent text-light"><strong>Sobre</strong></button></a>
 
       <?php if(isset($_SESSION['FUNCIONARIO'])){
-          echo "<a href='dashboard.php'>Dashboard<a>";
+          echo "<a href='dashboard.php'><button class='btn btn-transparent text-light'>
+          <strong>Dashboard</strong></button><a>";
         }else if(isset($_SESSION['ALUNO'])){
-          echo "<a href='areaAluno.php'>". $_SESSION['ALUNO']; "</a>";
+          echo "<a href='areaAluno.php'><button class='btn btn-transparent text-light'><strong>"
+          . $_SESSION['ALUNO']. "</strong></button></a>";
         } else {
-            echo "<a href='login.php'>Acesso ao Sistema</a>";
+            echo "<a href='login.php'><button class='btn btn-transparent text-light'><strong>
+                Acesso ao Sistema</strong></button></a>";
         }?>
     </div>
     <!-- FIM NAV BAR-->

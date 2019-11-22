@@ -6,8 +6,8 @@ session_start();
 
 if(isset($_POST['MAT'])){
 
-    $rgCurso = '/^[A-Za-z\s]{3,}$/';
-    $rgDiciplina = '/^[A-Za-z\s0-9]{3,}$/';
+    $rgCurso = '/^[A-ZÀ-Úa-zà-ú\s]{3,}$/';
+    $rgDiciplina = '/^[A-ZÀ-Úa-z\s0-9à-ú]{3,}$/';
     $rgNome = '/^[A-ZÀ-Ú]{1}[a-zA-ZÀ-Úà-ú]+[\s]+[A-ZÀ-Ú]{1}[a-zA-ZÀ-Úà-ú]+$/';
     $rgCpf = '/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/';
     $rgData_nasc = '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/';

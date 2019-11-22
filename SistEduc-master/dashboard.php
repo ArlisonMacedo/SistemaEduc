@@ -21,13 +21,24 @@
   <!--NAV BAR-->
   <div class="topnav">
       <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>
-      <a href="Sobre.php">Sobre</a>
-      <a href="Includes/Destroy.php">Sair</a>
+      <a href="Sobre.php"><button class="btn btn-transparent text-light"><strong>Sobre</strong></button></a>
+      <?php
+        if(isset($_SESSION['FUNCIONARIO'])){
+            echo "<a href='' style='position:absolute; left: 70%;'>
+                <button class='btn btn-transparent text-light'><strong>Olá, ".$_SESSION['FUNCIONARIO']."</strong></button>
+            </a>";
+        }
+       ?>
+      <a href="Includes/Destroy.php" style="position:relative; left: 70%;">
+          <button class="btn btn-dark">
+              <strong>Sair</strong>
+          </button>
+      </a>
     </div>
   <!-- FIM NAV BAR-->
   <section>
     <div class="container">
-      <center><h2>Ola <?= $_SESSION['FUNCIONARIO'];?> Bem Vindo</h2></center>
+      <h2>Painel de Controle</h2>
       <br>
       <div class="row">
         <div class="col-md-2">
@@ -42,9 +53,16 @@
         <div class="col-sm-12">
           <?php
             if(isset($_SESSION['ERRO'])){ ?>
-              <div class="alert alert-warning" role="alert">
-                <?= $_SESSION['ERRO'];
+              <div class="alert alert-warning"  role="alert">
+                <?= "<strong>".$_SESSION['ERRO']."</strong>";
                   unset($_SESSION['ERRO']);
+                ?>
+              </div>
+            <?php }
+            if(isset($_SESSION['SUCESSO'])){ ?>
+              <div class="alert alert-success"  role="alert">
+                <?= "<strong>".$_SESSION['SUCESSO']."</strong>";
+                  unset($_SESSION['SUCESSO']);
                 ?>
               </div>
             <?php }
@@ -81,13 +99,24 @@
                 // $values['ID'];
                 // $values['NOMEALUNO']
               echo"<tr>";
-              foreach($values as $key => $dados){
+              /**foreach($values as $key => $dados){
                 if($key != "ID" && $key != "Alunos_MAT"){
                   echo "<td><strong>".$dados."</strong></td>";
 
-                }
+              }*/
+              ?>
+                <td><?= $values['MAT'];?></td>
+                <td><?= $values['NOMEALUNO'];?></td>
+                <td><?= $values['CPF'];?></td>
+                <td><?= date('d/m/Y', strtotime($values['Data_nasc']));  ?></td>
+                <td><?= $values['cUrSo'];?> </td>
+                <td><?= $values['DICIPLINA'];?></td>
+                <td><?= $values['NOTA1'];?></td>
+                <td><?= $values['NOTA2'];?></td>
+                <td><?= $values['MEDIA'];?></td>
+              <?php
 
-              }?>
+              ?>
               <td>
                 <form action="editUser.php" method="post" class="border-0">
                   <input type="hidden" name="MAT" value="<?= $values['MAT'];?>">
@@ -126,6 +155,7 @@
       </table>
       <br><br><br>
   </section>
+
 
 
 </body>
