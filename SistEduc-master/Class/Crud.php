@@ -28,22 +28,36 @@
             }
         }
         // força
-        public function insertFunc(Func $func){
-            $sql = "INSERT INTO FUNCIONARIO VALUES (null,:NOME,:CPF,:SENHA)";
-            try {
-                //code...
-                $stmt = $this->connectionDB()->prepare($sql);
+        public function insertFunc(Func $func,$cpfAdmin,$passAdmin){
 
-                $stmt->bindValue(":NOME",$func->getNome());
-                $stmt->bindValue(":CPF",$func->getCpf());
-                $stmt->bindValue(":SENHA",$func->getSenha());
+            $admin = $this->connectionDB()->prepare("SELECT * FROM FUNCIONARIO WHERE CPF = :CPF AND SENHA = :SENHA");
+            $admin->bindValue(":CPF",$cpfAdmin);
+            $admin->bindValue(":SENHA",$passAdmin);
+            $admin->execute();
+            $row = $admin->fetchAll(PDO::FETCH_ASSOC);
+            if(count($row) == 1){
+                $sql = "INSERT INTO FUNCIONARIO VALUES (null,:NOME,:CPF,:EMAIL,:SENHA)";
+                try {
+                    //code...
+                    $stmt = $this->connectionDB()->prepare($sql);
 
-                if($stmt->execute()){
-                    echo "Dados inseridos com sucesso";
+                    $stmt->bindValue(":NOME",$func->getNome());
+                    $stmt->bindValue(":CPF",$func->getCpf());
+                    $stmt->bindValue(":EMAIL",$func->getEmail());
+                    $stmt->bindValue(":SENHA",$func->getSenha());
+
+                    if($stmt->execute()){
+                        $_SESSION['USERCREATE'] = "Usuário Criado com Sucesso";
+
+                        header("Location: ../loginFunc.php");
+                    }
+                } catch (PDOException $th) {
+                    //throw $th;
+                    echo "Erro ".$th->getMessage();
                 }
-            } catch (PDOException $th) {
-                //throw $th;
-                echo "Erro ".$th->getMessage();
+            }else{
+                $_SESSION['ERRO'] = "Erro! Verifique Novamente";
+                header("Location: ../cadastroFunc.php");
             }
         }
         public function deleteFunc(Func $func){
@@ -66,26 +80,30 @@
         public function login(Func $func){
             //login Funcionario
             //session_start();
-            $sql = "SELECT * FROM FUNCIONARIO WHERE NOME = :NOME and CPF = :CPF";
+            $sql = "SELECT * FROM FUNCIONARIO WHERE CPF = :CPF and SENHA = :SENHA";
 
             try {
                 //code...
                 $stmt = $this->connectionDB()->prepare($sql);
 
-                $stmt->bindValue(":NOME",$func->getNome());
                 $stmt->bindValue(":CPF",$func->getCpf());
+                $stmt->bindValue(":SENHA",$func->getSenha());
 
                 $stmt->execute();
-                $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                if(count($row) == 1){
-                    $_SESSION['FUNCIONARIO'] = $func->getNome();
-                    header("Location: ../dashboard.php");
-
-                }else{
-                    $_SESSION['ERROLOGIN'] = "Usuario ou CPF Invalidos";
-                    header("Location: ../login.php");
+                $dados;
+                while($row = $stmt->fetch(PDO::FETCH_OBJ)){
+                    $dados = $row->NOME;
                 }
+                    if(count($dados) == 1){
+
+                        $_SESSION['FUNCIONARIO'] = $dados;
+                        header("Location: ../dashboard.php");
+
+                    }else{
+                        echo $dados;
+                        $_SESSION['ERROLOGIN'] = "Usuario ou CPF Invalidos";
+                        header("Location: ../loginFunc.php");
+                    }
 
             } catch (PDOException $th) {
                 //throw $th;
@@ -447,7 +465,7 @@
                    $reload->bindValue(":nota2",$_SESSION['nota2']);
                    $reload->bindValue(":ID",$_SESSION['ID_CURSO']);
                    $reload->execute();
-                   
+
                     $_SESSION['ERRO'] = "ERRO! Curso e Disciplina Já Cadastrado a esse Usuário";
                     header("Location: ../dashboard.php");
 

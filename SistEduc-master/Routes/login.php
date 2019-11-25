@@ -1,29 +1,31 @@
-<?php 
+<?php
 session_start();
 
-if(isset($_POST['nome']) && isset($_POST['cpf'])){
-    $usuario = $_POST['nome'];
-    $cpf = $_POST['cpf'];
+if(isset($_POST['CPF']) && isset($_POST['senha'])){
+    $cpf = $_POST['CPF'];
+    $senha = $_POST['senha'];
 
-    if(preg_match('/^[A-Z]{1}[A-Za-z0-9@À-Úà-ú]{5,}$/',$usuario) && 
-        preg_match('/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/',$cpf)){
-    
+    if( preg_match('/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/',$cpf) &&
+        preg_match('/^[\w\d]{6,}$/',$senha)
+        ){
+
         include '../Class/Func.php';
         include '../Class/Crud.php';
         $func = new Func;
-        $func->setNome($usuario);
         $func->setCpf($cpf);
+        $func->setSenha($senha);
         $crud = new Crud;
-        
+
         $crud->login($func);
-        
+
        }else{
+           
             $_SESSION['ERRO'] = "Entrada de Dados Invalidos";
-            header("Location: ../login.php");
+            header("Location: ../loginFunc.php");
        }
 
     }else{
-        header("Location: ../login.php");
+        header("Location: ../loginFunc.php");
     }
 
 ?>

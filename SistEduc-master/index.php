@@ -32,7 +32,7 @@
           echo "<a href='areaAluno.php'><button class='btn btn-transparent text-light'><strong>"
           . $_SESSION['ALUNO']. "</strong></button></a>";
         } else {
-            echo "<a href='login.php'><button class='btn btn-transparent text-light'><strong>
+            echo "<a href='whoiam.php'><button class='btn btn-transparent text-light'><strong>
                 Acesso ao Sistema</strong></button></a>";
         }?>
     </div>

@@ -23,11 +23,14 @@
       <a href="index.php"><img class="img" src="./img/logo1.png" alt="" href="index.html"></a>
       <a href="Sobre.php"><button class="btn btn-transparent text-light"><strong>Sobre</strong></button></a>
       <?php
-        if(isset($_SESSION['FUNCIONARIO'])){
-            echo "<a href='' style='position:absolute; left: 70%;'>
-                <button class='btn btn-transparent text-light'><strong>Olá, ".$_SESSION['FUNCIONARIO']."</strong></button>
-            </a>";
-        }
+        if(isset($_SESSION['FUNCIONARIO'])){?>
+            <a style="position:absolute; left: 70%;">
+                <button class='btn btn-transparent text-light' data-toggle="popover" data-trigger="focus"
+                 title="Olá" data-content="Você esta indo bem " data-placement="bottom">
+                    <strong>Olá,<?= $_SESSION['FUNCIONARIO'] ;?></strong>
+                </button>
+            </a>
+        <?php }
        ?>
       <a href="Includes/Destroy.php" style="position:relative; left: 70%;">
           <button class="btn btn-dark">
@@ -155,7 +158,20 @@
       </table>
       <br><br><br>
   </section>
-
+  <script
+    src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous">
+</script>
+<script src="bootstrap/js/bootstrap.bundle.js"></script>
+  <script>
+  $(function () {
+      $('[data-toggle="popover"]').popover()
+  })
+  $('.popover-dismiss').popover({
+      trigger: 'focus'
+    })
+  </script>
 
 
 </body>

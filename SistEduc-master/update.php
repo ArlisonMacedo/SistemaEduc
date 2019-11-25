@@ -65,7 +65,7 @@
         <div class="form-row">
             <div class="col-md-6">
             <label for="">Data de Nasc</label>
-            <input type="text" name="data_nasc" class="form-control" readonly value="<?= $dados['Data_nasc'];?>"><br>
+            <input type="date" name="data_nasc" class="form-control" readonly value="<?= $dados['Data_nasc'];?>"><br>
             </div>
         </div>
         <div class="form-row">
@@ -95,7 +95,7 @@
     </form>
         <?php }
         }else{
-        header("Location: dashboard.php");
+            header("Location: dashboard.php");
         }?>
 
 </body>

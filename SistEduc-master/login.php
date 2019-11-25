@@ -1,4 +1,5 @@
 <?php session_start();
+
   if(isset($_SESSION['ALUNO'])){
     header("location: areaAluno.php");
   }else if(isset($_SESSION['FUNCIONARIO'])){
@@ -27,7 +28,7 @@
 
 
 
-  <form action="Routes/switchChoice.php" method="post" class="border-0">
+  <form action="Routes/loginAluno.php" method="post" class="border-0">
 
     <div class="imgcontainer">
       <img id="imglogin" src="./img/logo1.png" alt="Avatar" class="avatar">
@@ -45,28 +46,18 @@
               echo "</div>";
               session_destroy();
         } ?>
-    <select name="usuario" class="browser-default custom-select"required >
-      <option selected disabled >Abra e Selecione o usuario</option>
-      <option value="func">Administrador</option>
-      <option value="aluno">Aluno</option>
-    </select>
-
-    <br><br>
       <label for=""><b>Nome</b></label>
       <input type="text" placeholder="Fulano Silva" name="nome" required>
       <label for=""><b>CPF</b></label>
       <input type="text" placeholder="000.111.222-99" name="cpf" required>
 
-      <button type="submit" class="btn btn-primary btn-fluid">Entrar</button>
+      <button type="submit" class="btn btn-primary btn-block">Entrar</button>
 
     </div>
 
 
   </form>
-  <script>
-  $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
-    $("#success-alert").slideUp(500);
-});
+
 </script>
 </body>
 </html>
