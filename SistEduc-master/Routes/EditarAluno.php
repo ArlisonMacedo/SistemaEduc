@@ -1,13 +1,13 @@
 <?php
 
     session_start();
-    
+
     if(isset($_POST['MAT'])){
-        
+
         if(preg_match('/^[A-ZÀ-Ú]{1}[a-zA-ZÀ-Úà-ú]+[\s]+[A-ZÀ-Ú]{1}[a-zA-ZÀ-Úà-ú]+$/',$_POST['nome']) &&
         preg_match('/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/',$_POST['cpf']) &&
         preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/',$_POST['data_nasc'])){
-            
+
             include '../Class/Aluno.php';
             $aluno = new Aluno;
 
@@ -24,7 +24,7 @@
 
         }else{
             $_SESSION['ERRO'] = "Entrada de Dados Invalidos";
-            header("Location: ../dashboard.php");
+            header("Location: ../editUser.php");
         }
     }else{
         header("Location: ../dashboard.php");

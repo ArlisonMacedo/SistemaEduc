@@ -23,13 +23,19 @@
       <a href="Sobre.php">Sobre</a>
       <a href="dashboard.php">Dashboard</a>
     </div>
+
+
     <?php
-        
-        if(isset($_POST['MAT'])){
+
+        if(isset($_POST['MAT']) || isset($_SESSION['ROLLBACK'])){
             include 'Class/Aluno.php';
             include 'Class/Crud.php';
             $aluno = new Aluno;
-            $aluno->setMat($_POST['MAT']);
+            if(isset($_POST['MAT'])){
+                $aluno->setMat($_POST['MAT']);
+            }else if(isset($_SESSION['ROLLBACK'])){
+                $aluno->setMat($_SESSION['ROLLBACK']);
+            }
             $crud = new Crud;
 
             $row = $crud->selectUpdateAluno($aluno);// esse script esta localizado em Crud.php
@@ -42,6 +48,14 @@
             if($row){ ?>
                 <div class="container">
                     <h3>Atualizar dados do Aluno</h3>
+                    <?php
+                    if(isset($_SESSION['ERRO'])){
+                        echo "<div class='alert alert-warning' role='alert'>
+                                <h6>".$_SESSION['ERRO']."</h6>
+                             </div>";
+                             unset($_SESSION['ERRO']);
+                    }
+                     ?>
                     <form action="Routes/EditarAluno.php" method="POST"class="border-0">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Nome do Aluno</label>

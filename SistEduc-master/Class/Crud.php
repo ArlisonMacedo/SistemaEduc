@@ -178,8 +178,9 @@
                     if($stmt->execute()){
                         header("Location: ../dashboard.php");
                     }else{
-                        $_SESSION['ERRO'] = "Algo Deu Errado, CPF já Existente ou outros Dados Invalidos para Matricula ".$aluno->getMat()."";
-                        header("Location: ../dashboard.php");
+                        $_SESSION['ERRO'] = "Algo Deu Errado, CPF já Existente ou Entrada de Dados Invalidos ";
+                        $_SESSION['ROLLBACK'] = $aluno->getMat();
+                        header("Location: ../editUser.php");
                     }
                 } catch (PDOException $th) {
                     //throw $th;
