@@ -24,7 +24,7 @@
       <a href="dashboard.php">Dashboard</a>
     </div>
     <?php
-
+        
         if(isset($_POST['MAT'])){
             include 'Class/Aluno.php';
             include 'Class/Crud.php';

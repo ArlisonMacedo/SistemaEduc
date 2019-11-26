@@ -46,6 +46,7 @@
                 if(isset($_POST['Alunos_MAT'])){
 
                     $AlunosMAT = $_POST['Alunos_MAT'];
+
                     if(preg_match('/^[\d]{4,}$/',$_POST['Alunos_MAT'])){
                     include 'Class/Crud.php';
                     include 'Class/Aluno.php';
@@ -87,7 +88,9 @@
                 }
             }
         } ?>
-        </form>
+    </form> <!-- fim do formulario de pesquisar o aluno -->
+
+
         <form action="Routes/insertCurso.php" method="POST" class="border-0">
         <div class="form-row mt-1">
             <div class="col-md-4 mb-3">

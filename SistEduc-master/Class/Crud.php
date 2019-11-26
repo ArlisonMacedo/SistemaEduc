@@ -163,23 +163,29 @@
             /**
              * Função para Atualizar os Dados somente do Aluno
              */
-            $sql = "UPDATE Alunos SET NOMEALUNO = :nome, CPF = :cpf, Data_nasc = :data_nasc
-            WHERE MAT = :MAT";
 
-            try {
-                //code...
-                $stmt = $this->connectionDB()->prepare($sql);
-                $stmt->bindValue(":nome",$aluno->getNome());
-                $stmt->bindValue(":cpf",$aluno->getCpf());
-                $stmt->bindValue(":data_nasc",$aluno->getData_nasc());
-                $stmt->bindValue(":MAT",$aluno->getMat());
-                if($stmt->execute()){
-                    header("Location: ../dashboard.php");
+
+                $sql = "UPDATE Alunos SET NOMEALUNO = :nome, CPF = :cpf, Data_nasc = :data_nasc
+                WHERE MAT = :MAT";
+
+                try {
+                    //code...
+                    $stmt = $this->connectionDB()->prepare($sql);
+                    $stmt->bindValue(":nome",$aluno->getNome());
+                    $stmt->bindValue(":cpf",$aluno->getCpf());
+                    $stmt->bindValue(":data_nasc",$aluno->getData_nasc());
+                    $stmt->bindValue(":MAT",$aluno->getMat());
+                    if($stmt->execute()){
+                        header("Location: ../dashboard.php");
+                    }else{
+                        $_SESSION['ERRO'] = "Algo Deu Errado, CPF já Existente ou outros Dados Invalidos para Matricula ".$aluno->getMat()."";
+                        header("Location: ../dashboard.php");
+                    }
+                } catch (PDOException $th) {
+                    //throw $th;
+                    echo "Erro ".$th->getMessage();
                 }
-            } catch (PDOException $th) {
-                //throw $th;
-                echo "Erro ".$th->getMessage();
-            }
+
         }
 
         public function deleteAluno(Aluno $aluno,Curso $curso){
@@ -323,14 +329,18 @@
             // do Aluno para o relacionamento
             // o curso somente irar ser cadastro se exitir um Aluno para relacionar a ele(Curso)
 
-            $exist = "SELECT * FROM CURSO WHERE cUrSo = :curso and DICIPLINA = :disciplina";
+            $exist = "SELECT * FROM CURSO
+                WHERE cUrSo = :curso and DICIPLINA = :disciplina and CURSO.Alunos_MAT = :MAT";
+
             $try = $this->connectionDB()->prepare($exist);
             $try->bindValue(":curso",$curso->getNome_curso());
             $try->bindValue(":disciplina",$curso->getDiciplina());
+            $try->bindValue(":MAT",$curso->getAlunos_MAT());
             $try->execute();
             $row = $try->fetchAll(PDO::FETCH_ASSOC);
-            if(count($row) > 0){
+            if(count($row) >= 1){
                 $_SESSION['ERRO'] = "ERRO! Curso e Disciplina Já Cadastrado a esse Usuário";
+
                 header("Location: ../dashboard.php");
             }else{
 
@@ -347,6 +357,7 @@
                     if($stmt->execute()){
                         header("Location: ../dashboard.php");
                     }
+
                 } catch (PDOException $th) {
                     //throw $th;
                     echo "Erro ".$th->getMessage();
@@ -422,13 +433,14 @@
                 $stud->bindValue(":MAT",$aluno->getMat());
                 if($stud->execute()){
                     $boolA = true;
+                    $_SESSION['NewMAT'] = $aluno->getMat();
                 }
                 if($boolC && $boolA){
                 /** Sempre irar dar Verdadeiro (True) pois o usuario não irar manusear as chaves
                  * primarias de ambas as tabelas, pois isso ficara a cargo do sistema em suas
                  * tratativas
                  */
-                 $this->Rollback($_SESSION['NewCurso'], $_SESSION['NewDisciplina']);
+                 $this->Rollback($_SESSION['NewCurso'], $_SESSION['NewDisciplina'],$_SESSION['NewMAT']);
                 }
             } catch (PDOException $th) {
                 //throw $th;
@@ -436,23 +448,26 @@
             }
         }
 
-        public function Rollback($curso, $disciplina){
-            $exist = "SELECT * FROM Alunos as Al inner join CURSO as CS on Al.MAT = CS.Alunos_MAT
-            WHERE CS.cUrSo = :curso and CS.DICIPLINA = :disciplina";
+        public function Rollback($curso, $disciplina,$Mat){
+            $exist = "SELECT * FROM CURSO
+            WHERE cUrSo = :curso and DICIPLINA = :disciplina and CURSO.Alunos_MAT = :MAT";
 
             $try = $this->connectionDB()->prepare($exist);
             $try->bindValue(":curso",$curso);
             $try->bindValue(":disciplina",$disciplina);
+            $try->bindValue(":MAT",$Mat);
             $try->execute();
             $row = $try->fetchAll(PDO::FETCH_ASSOC);
             if(count($row) <= 1){
 
                 //include '../verificaDuplication.php';
+                //while ($dados = $row->fetch(PDO::FETCH_OBJ)) {
+                    // code...
+                //}
                 $_SESSION['SUCESSO'] = "Atualizado com Sucesso";
 
                 header("Location: ../dashboard.php");
-
-
+                //echo count($row);
                }else{
                    $upCurso = "UPDATE CURSO SET cUrSo = :curso, DICIPLINA = :diciplina, nota1 = :nota1,
                    nota2 = :nota2, MEDIA = (:nota1+:nota2) / 2 WHERE ID = :ID";
@@ -466,8 +481,12 @@
                    $reload->bindValue(":ID",$_SESSION['ID_CURSO']);
                    $reload->execute();
 
-                    $_SESSION['ERRO'] = "ERRO! Curso e Disciplina Já Cadastrado a esse Usuário";
-                    header("Location: ../dashboard.php");
+                   $_SESSION['ERRO'] = "ERRO! Curso e Disciplina Já Cadastrado a esse Usuário";
+
+                   header("Location: ../dashboard.php");
+
+                  //echo count($row);
+
 
                }
            }
